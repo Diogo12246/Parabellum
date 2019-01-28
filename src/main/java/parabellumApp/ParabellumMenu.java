@@ -6,9 +6,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
+
+import java.net.URL;
 
 
 public class ParabellumMenu extends Application {
@@ -26,8 +31,16 @@ public class ParabellumMenu extends Application {
 
     @Override
     public void start(Stage stage) {
-
+        URL titleMusic = getClass().getClassLoader().getResource("Assets/SOUND/titleMusic.mp3");
         try {
+            MediaPlayer player = new MediaPlayer(new Media(titleMusic.toString()));
+            player.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    player.seek(Duration.ZERO);
+                }
+            });
+            player.play();
             ParabellumMenu.stage = stage;
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("FXML/ParabellumMenu.fxml"));
             scene = new Scene(root);
